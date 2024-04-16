@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dyutqr02vriis"]
+
+[ext_resource type="Shader" path="res://Scenes/Vortex.gdshader" id="1_37vqc"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uat7j"]
+seed = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fkcti"]
+width = 1080
+height = 1080
+seamless = true
+noise = SubResource("FastNoiseLite_uat7j")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_37vqc")
+shader_parameter/perlin_texture = SubResource("NoiseTexture2D_fkcti")

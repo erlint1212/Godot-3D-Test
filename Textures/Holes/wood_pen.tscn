@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk8w4jnjur43a"]
+
+[ext_resource type="Texture2D" uid="uid://cvi3prg0lhvag" path="res://Textures/HoleInWall.png" id="1_6avea"]
+
+[node name="WoodPen" type="Sprite3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+texture = ExtResource("1_6avea")

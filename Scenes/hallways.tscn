@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=3 uid="uid://q5y7ppgh6oal"]
+
+[ext_resource type="Texture2D" uid="uid://dxcd1mimjm8vk" path="res://Textures/Wall/beige_wall_001_2k/textures/beige_wall_001_diff_2k.jpg" id="1_vb6pt"]
+[ext_resource type="Texture2D" uid="uid://bakqlkoeljox7" path="res://Textures/Wall/beige_wall_001_2k/textures/beige_wall_001_nor_gl_2k.png" id="2_vcnhw"]
+[ext_resource type="Texture2D" uid="uid://b846rqp3l58rj" path="res://Textures/Wall/beige_wall_001_2k/textures/beige_wall_001_rough_2k.jpg" id="3_x2f5k"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qg0"]
+sky_top_color = Color(0.0705882, 0.0941176, 0.12549, 1)
+sky_horizon_color = Color(0.567647, 0.565779, 0.564623, 1)
+ground_horizon_color = Color(0.567647, 0.565779, 0.564623, 1)
+
+[sub_resource type="Sky" id="Sky_65xme"]
+sky_material = SubResource("ProceduralSkyMaterial_o5qg0")
+
+[sub_resource type="Environment" id="Environment_ph3uw"]
+background_mode = 2
+sky = SubResource("Sky_65xme")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Shader" id="Shader_3jrwa"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_front,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform sampler2D texture_normal : hint_roughness_normal,filter_linear_mipmap,repeat_enable;
+uniform float normal_scale : hint_range(-16,16);
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+uniform sampler2D displacement;
+
+varying float height;
+varying vec3 world_pos;
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	NORMAL_MAP = texture(texture_normal,base_uv).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bi33p"]
+render_priority = 0
+shader = SubResource("Shader_3jrwa")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("1_vb6pt")
+shader_parameter/texture_roughness = ExtResource("3_x2f5k")
+shader_parameter/texture_normal = ExtResource("2_vcnhw")
+
+[node name="Hallways" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ph3uw")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+size = Vector3(3, 3, 200)
+material = SubResource("ShaderMaterial_bi33p")

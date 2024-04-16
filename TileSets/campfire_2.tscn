@@ -1,0 +1,113 @@
+[gd_scene load_steps=17 format=3 uid="uid://x7n2bnh1wn8r"]
+
+[ext_resource type="PackedScene" uid="uid://cvuimiqypktdf" path="res://Blender/Campfire.glb" id="1_1j0hd"]
+[ext_resource type="Texture2D" uid="uid://6ecv4vicn35c" path="res://Textures/Fire/fire_02.png" id="2_a6ahq"]
+[ext_resource type="Texture2D" uid="uid://38b0wsfyx3v6" path="res://Textures/Fire/smoke_01.png" id="3_3vtpa"]
+[ext_resource type="AudioStream" uid="uid://b8xofd6jms2gu" path="res://Sounds/Fireplace_Sound_Effect_loop.wav" id="4_w752c"]
+
+[sub_resource type="Gradient" id="Gradient_3sj6r"]
+colors = PackedColorArray(0.972549, 0.431373, 0, 1, 0.999779, 0.194937, 0.144629, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5ong2"]
+gradient = SubResource("Gradient_3sj6r")
+
+[sub_resource type="Curve" id="Curve_ja3ha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.309524, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kjdl1"]
+curve = SubResource("Curve_ja3ha")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3upnt"]
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 5.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+angular_velocity_min = -50.0
+angular_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 1.0
+linear_accel_max = 1.0
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_kjdl1")
+color_ramp = SubResource("GradientTexture1D_5ong2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ire40"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_a6ahq")
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_fehgh"]
+material = SubResource("StandardMaterial3D_ire40")
+
+[sub_resource type="Gradient" id="Gradient_h806f"]
+offsets = PackedFloat32Array(0.321429, 0.696429, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.419608, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6lhoe"]
+gradient = SubResource("Gradient_h806f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hsrrh"]
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 5.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+angular_velocity_min = -50.0
+angular_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 1.0
+linear_accel_max = 1.0
+color_ramp = SubResource("GradientTexture1D_6lhoe")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6txol"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_3vtpa")
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_8fj1n"]
+material = SubResource("StandardMaterial3D_6txol")
+
+[node name="Campfire2" instance=ExtResource("1_1j0hd")]
+
+[node name="Flames" type="GPUParticles3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141343, 0)
+amount = 16
+preprocess = 2.0
+process_material = SubResource("ParticleProcessMaterial_3upnt")
+draw_pass_1 = SubResource("QuadMesh_fehgh")
+
+[node name="Smoke" type="GPUParticles3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141343, 0)
+amount = 16
+lifetime = 2.0
+preprocess = 2.0
+speed_scale = 0.66
+process_material = SubResource("ParticleProcessMaterial_hsrrh")
+draw_pass_1 = SubResource("QuadMesh_8fj1n")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.42404, 0)
+light_color = Color(0.960784, 0.572549, 0.423529, 1)
+omni_range = 5.375
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="4"]
+stream = ExtResource("4_w752c")
+max_db = 6.0
+autoplay = true

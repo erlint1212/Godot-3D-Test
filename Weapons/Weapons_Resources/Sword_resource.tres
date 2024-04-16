@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Weapons_Resource" load_steps=4 format=3 uid="uid://et0lbunbthxo"]
+
+[ext_resource type="AudioStream" uid="uid://cx7vnw7iwb56p" path="res://Sounds/SwordSliceSound.wav" id="1_1y1n3"]
+[ext_resource type="AudioStream" uid="uid://c1w0hkoebjfaw" path="res://Sounds/sword_draw_sound.wav" id="1_fynyu"]
+[ext_resource type="Script" path="res://Weapons/weapon_resource.gd" id="1_ovbrn"]
+
+[resource]
+script = ExtResource("1_ovbrn")
+Weapon_Name = "Sword"
+Activate_Anim = "sword_activate"
+Shoot_Anim = "sword_attack"
+Reload_Anim = ""
+Deactivate_Anim = ""
+Out_Of_Ammo_Anim = ""
+Current_Ammo = 0
+Reserve_Ammo = 0
+Magazine = 0
+Max_Ammo = 0
+Auto_Fire = false
+Weapon_Range = 0
+Damage = 2
+Type = 4
+Projectile_Velocity = 0
+Weapon_hurtbox = NodePath("Head/Camera3D/Weapons_Manager/FPS_Rig/Sword/Sword/HurtBox")
+Hit_Sound = ExtResource("1_1y1n3")
+Draw_sound = ExtResource("1_fynyu")

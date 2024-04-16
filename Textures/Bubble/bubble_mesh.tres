@@ -1,0 +1,6 @@
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://di5px4piaxslo"]
+
+[ext_resource type="Material" uid="uid://cugag35xr7vr6" path="res://Textures/Bubble/bubble.tres" id="1_vef05"]
+
+[resource]
+material = ExtResource("1_vef05")

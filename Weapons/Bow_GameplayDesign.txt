@@ -1,0 +1,6 @@
+Have a sweetspot window where the arrow will fire for more damage / reload faster / better enviormental penetration. 
+Arrows able to wallbang thorugh thin wooden structures.
+Indicate with sound if missed with creak and start with slowdown of string pull. Or visually with ui (like the reload in )
+Hold 5 arrows in your hand and fire rapidly, reload animation retrieving more arrows from quiver.
+See ammo physically on your body as in quiver. Color code 5 by 5 arrows to indicate "magazine"
+Alt fire where you move slower and have less accuracy but shoot much faster, indicate by leaning the bow to the side

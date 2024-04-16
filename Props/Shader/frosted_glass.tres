@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://b31kv2toecelj"]
+
+[ext_resource type="Shader" path="res://Props/Shader/frosted_glass.gdshader" id="1_3s3jv"]
+[ext_resource type="Texture2D" uid="uid://b7nnk62wclway" path="res://Textures/Glass/FrostedGlass/Glass_Frosted_001_normal.jpg" id="2_e266s"]
+[ext_resource type="Texture2D" uid="uid://d2wmgrjq3ld5o" path="res://Textures/Glass/FrostedGlass/Glass_Frosted_001_basecolor.jpg" id="3_yxkep"]
+[ext_resource type="Texture2D" uid="uid://cqsu55eguvjug" path="res://Textures/Glass/FrostedGlass/Glass_Frosted_001_ambientOcclusion.jpg" id="4_hpf8h"]
+[ext_resource type="Texture2D" uid="uid://6kmuhiqoyna0" path="res://Textures/Glass/FrostedGlass/Glass_Frosted_001_roughness.jpg" id="5_pgnhq"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3s3jv")
+shader_parameter/distortion_size = 0.4
+shader_parameter/alpha = 0.9
+shader_parameter/ao_texture_channel = null
+shader_parameter/ao_light_affect = null
+shader_parameter/normal_scale = 1.0
+shader_parameter/texture_roughness = ExtResource("5_pgnhq")
+shader_parameter/glass = ExtResource("2_e266s")
+shader_parameter/texture_ambient_occlusion = ExtResource("4_hpf8h")
+shader_parameter/texture_albedo = ExtResource("3_yxkep")

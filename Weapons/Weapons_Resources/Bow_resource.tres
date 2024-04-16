@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Weapons_Resource" load_steps=5 format=3 uid="uid://r6dy1o8xcriw"]
+
+[ext_resource type="PackedScene" uid="uid://r0e0d7fh7vyk" path="res://Weapons/Arrow_rigid_body_3d.tscn" id="1_7jqc2"]
+[ext_resource type="AudioStream" uid="uid://bn8reoj55uhgg" path="res://Sounds/DrawBow.wav" id="1_55k4k"]
+[ext_resource type="Script" path="res://Weapons/weapon_resource.gd" id="1_gc2wb"]
+[ext_resource type="AudioStream" uid="uid://b3aokr0kqig0d" path="res://Sounds/StandardArrowShot.wav" id="2_lma3x"]
+
+[resource]
+script = ExtResource("1_gc2wb")
+Weapon_Name = "Bow"
+Activate_Anim = "bow_activate"
+Shoot_Anim = "bow_shoot_arrow"
+Reload_Anim = "bow_reload"
+Deactivate_Anim = ""
+Out_Of_Ammo_Anim = ""
+Current_Ammo = 1
+Reserve_Ammo = 10
+Magazine = 1
+Max_Ammo = 20
+Auto_Fire = false
+Weapon_Range = 500
+Damage = 1
+Type = 2
+Projectile_to_Load = ExtResource("1_7jqc2")
+Projectile_Velocity = 150
+Shooting_Sound = ExtResource("2_lma3x")
+Chargeing_Sound = ExtResource("1_55k4k")

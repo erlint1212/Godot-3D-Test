@@ -1,0 +1,400 @@
+[gd_scene load_steps=45 format=3 uid="uid://b5uyoaky6iu1a"]
+
+[ext_resource type="Texture2D" uid="uid://dwa7k24b35x6u" path="res://icon.svg" id="1_1qsqt"]
+[ext_resource type="Shader" path="res://Scenes/tiling_and_offset.gdshader" id="1_1w7cs"]
+[ext_resource type="PackedScene" uid="uid://b6xwomk76qhd2" path="res://Player/player.tscn" id="1_3uxll"]
+[ext_resource type="Shader" path="res://Scenes/masking.gdshader" id="1_318rl"]
+[ext_resource type="Texture2D" uid="uid://dqvxgsqvvdsr4" path="res://Textures/Masks/H_black_white.png" id="4_yknaa"]
+[ext_resource type="Shader" path="res://Scenes/distortion.gdshader" id="5_xgwqu"]
+[ext_resource type="Shader" path="res://Scenes/Erosion.gdshader" id="6_tpsr6"]
+[ext_resource type="Shader" path="res://Scenes/PolarCoord2.gdshader" id="7_fxbgx"]
+[ext_resource type="Shader" uid="uid://b8vja6numlmhk" path="res://Scenes/Polar_Coordinates_Material.tres" id="7_hrs7m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xuheq"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fheu0"]
+material = SubResource("ShaderMaterial_xuheq")
+size = Vector2(200, 200)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_v15qx"]
+data = PackedVector3Array(100, 0, 100, -100, 0, 100, 100, 0, -100, -100, 0, 100, -100, 0, -100, 100, 0, -100)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_454as"]
+render_priority = 0
+shader = ExtResource("1_1w7cs")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/tiling = Vector2(2, 2)
+shader_parameter/offset = Vector2(1, 1)
+shader_parameter/texture_albedo = ExtResource("1_1qsqt")
+
+[sub_resource type="BoxMesh" id="BoxMesh_8lby3"]
+material = SubResource("ShaderMaterial_454as")
+size = Vector3(4, 4, 1)
+subdivide_width = 2
+subdivide_height = 2
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_a1kdi"]
+data = PackedVector3Array(-2, 2, 0.5, 2, 2, 0.5, -2, -2, 0.5, 2, 2, 0.5, 2, -2, 0.5, -2, -2, 0.5, 2, 2, -0.5, -2, 2, -0.5, 2, -2, -0.5, -2, 2, -0.5, -2, -2, -0.5, 2, -2, -0.5, 2, 2, 0.5, 2, 2, -0.5, 2, -2, 0.5, 2, 2, -0.5, 2, -2, -0.5, 2, -2, 0.5, -2, 2, -0.5, -2, 2, 0.5, -2, -2, -0.5, -2, 2, 0.5, -2, -2, 0.5, -2, -2, -0.5, 2, 2, 0.5, -2, 2, 0.5, 2, 2, -0.5, -2, 2, 0.5, -2, 2, -0.5, 2, 2, -0.5, -2, -2, 0.5, 2, -2, 0.5, -2, -2, -0.5, 2, -2, 0.5, 2, -2, -0.5, -2, -2, -0.5)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_agaf0"]
+material = SubResource("ShaderMaterial_454as")
+size = Vector2(4, 4)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_04ha3"]
+data = PackedVector3Array(2, 0, 2, -2, 0, 2, 2, 0, -2, -2, 0, 2, -2, 0, -2, 2, 0, -2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y370a"]
+render_priority = 0
+shader = ExtResource("1_318rl")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/tiling = Vector2(0, 0)
+shader_parameter/offset = Vector2(0, 1)
+shader_parameter/scale = 1.0
+shader_parameter/texture_albedo = ExtResource("1_1qsqt")
+shader_parameter/mask = ExtResource("4_yknaa")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5dhxn"]
+material = SubResource("ShaderMaterial_y370a")
+size = Vector3(4, 4, 1)
+subdivide_width = 2
+subdivide_height = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7711s"]
+material = SubResource("ShaderMaterial_y370a")
+size = Vector2(4, 4)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4cfyi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f7syn"]
+seamless = true
+noise = SubResource("FastNoiseLite_4cfyi")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3s033"]
+render_priority = 0
+shader = ExtResource("5_xgwqu")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/distortion_tiling = Vector2(1, 1)
+shader_parameter/distortion_offset_speed = 1.0
+shader_parameter/scale = 1.0
+shader_parameter/distortion_intensity = 0.1
+shader_parameter/texture_albedo = ExtResource("1_1qsqt")
+shader_parameter/noise = SubResource("NoiseTexture2D_f7syn")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4vb26"]
+material = SubResource("ShaderMaterial_3s033")
+size = Vector3(4, 4, 1)
+subdivide_width = 2
+subdivide_height = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2lk50"]
+material = SubResource("ShaderMaterial_3s033")
+size = Vector2(4, 4)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b00ph"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wuikw"]
+seamless = true
+noise = SubResource("FastNoiseLite_b00ph")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yyj0v"]
+load_path = "res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_akcjq"]
+render_priority = 0
+shader = ExtResource("6_tpsr6")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/distortion_tiling = Vector2(1, 1)
+shader_parameter/erosion_max_offset = 1.0
+shader_parameter/scale = 0.35
+shader_parameter/distortion_intensity = 0.1
+shader_parameter/texture_albedo = SubResource("CompressedTexture2D_yyj0v")
+shader_parameter/noise = SubResource("NoiseTexture2D_wuikw")
+
+[sub_resource type="BoxMesh" id="BoxMesh_re3j5"]
+material = SubResource("ShaderMaterial_akcjq")
+size = Vector3(4, 4, 1)
+subdivide_width = 2
+subdivide_height = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1wbcs"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1gjm5"]
+seamless = true
+noise = SubResource("FastNoiseLite_1wbcs")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2cy7t"]
+load_path = "res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4cb8v"]
+render_priority = 0
+shader = ExtResource("6_tpsr6")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/distortion_tiling = Vector2(1, 1)
+shader_parameter/erosion_max_offset = 0.1
+shader_parameter/scale = 1.0
+shader_parameter/distortion_intensity = 0.1
+shader_parameter/texture_albedo = SubResource("CompressedTexture2D_2cy7t")
+shader_parameter/noise = SubResource("NoiseTexture2D_1gjm5")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_62mko"]
+material = SubResource("ShaderMaterial_4cb8v")
+size = Vector2(4, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ljp5"]
+render_priority = 0
+shader = ExtResource("7_hrs7m")
+shader_parameter/uv_tiling_offset_speed = Vector4(4, 1, 0, -1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5825e"]
+material = SubResource("ShaderMaterial_5ljp5")
+size = Vector2(4, 4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ypxnf"]
+render_priority = 0
+shader = ExtResource("7_fxbgx")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/tiling = Vector2(1, 1)
+shader_parameter/offset = Vector2(0.1, 0)
+shader_parameter/uv_tiling_offset_speed = null
+shader_parameter/scale = 0.35
+shader_parameter/texture_albedo = SubResource("CompressedTexture2D_2cy7t")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ri2ys"]
+material = SubResource("ShaderMaterial_ypxnf")
+size = Vector2(4, 4)
+
+[sub_resource type="Shader" id="Shader_6bnf4"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float proximity_fade_distance;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	ALPHA *= albedo.a * albedo_tex.a;
+	float depth_tex = textureLod(depth_texture,SCREEN_UV,0.0).r;
+	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex,1.0);
+	world_pos.xyz/=world_pos.w;
+	ALPHA*=clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f4f0e"]
+render_priority = 0
+shader = SubResource("Shader_6bnf4")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/proximity_fade_distance = 1.0
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("1_1qsqt")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7axis"]
+material = SubResource("ShaderMaterial_f4f0e")
+size = Vector2(4, 4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_seadn"]
+albedo_color = Color(0.984314, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_80h7u"]
+material = SubResource("StandardMaterial3D_seadn")
+
+[node name="ShaderTest" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.997185, -0.0743874, 0.00939732, 0, 0.125333, 0.992115, -0.0749786, 0.989322, -0.12498, 0, 0, 0)
+light_color = Color(0.996078, 1, 0.85098, 1)
+light_energy = 1.6
+shadow_enabled = true
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_fheu0")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_v15qx")
+
+[node name="TilingAndOffset" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2416, 2.08432, -11.1845)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TilingAndOffset"]
+visible = false
+mesh = SubResource("BoxMesh_8lby3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="TilingAndOffset/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TilingAndOffset/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_a1kdi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="TilingAndOffset"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_agaf0")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="TilingAndOffset/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TilingAndOffset/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_04ha3")
+
+[node name="Mask" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.20042, 2.08432, -11.1845)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mask"]
+visible = false
+mesh = SubResource("BoxMesh_5dhxn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Mask/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mask/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_a1kdi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mask"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_7711s")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Mask/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mask/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_04ha3")
+
+[node name="Distortion" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.590415, 2.08432, -11.1845)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Distortion"]
+visible = false
+mesh = SubResource("BoxMesh_4vb26")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Distortion/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Distortion/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_a1kdi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Distortion"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_2lk50")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Distortion/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Distortion/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_04ha3")
+
+[node name="Erosion" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2829, 2.08432, -11.1845)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Erosion"]
+visible = false
+mesh = SubResource("BoxMesh_re3j5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Erosion/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Erosion/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_a1kdi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Erosion"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_62mko")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Erosion/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Erosion/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_04ha3")
+
+[node name="Polar_Coordinates" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.22421, 2.08432, -11.1845)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Polar_Coordinates"]
+visible = false
+mesh = SubResource("BoxMesh_re3j5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Polar_Coordinates/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Polar_Coordinates/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_a1kdi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Polar_Coordinates"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 4, 0)
+mesh = SubResource("PlaneMesh_5825e")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Polar_Coordinates/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Polar_Coordinates/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_04ha3")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Polar_Coordinates"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ri2ys")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Polar_Coordinates/MeshInstance3D3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Polar_Coordinates/MeshInstance3D3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_04ha3")
+
+[node name="Depth_Fade" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2829, 2.08432, -11.1845)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Depth_Fade"]
+visible = false
+mesh = SubResource("BoxMesh_re3j5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Depth_Fade/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Depth_Fade/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_a1kdi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Depth_Fade"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_7axis")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Depth_Fade/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Depth_Fade/MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_04ha3")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Depth_Fade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.10553, 0, -0.849564)
+mesh = SubResource("SphereMesh_80h7u")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Depth_Fade"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19555, 0, -0.0591602)
+mesh = SubResource("SphereMesh_80h7u")
+
+[node name="Player" parent="." instance=ExtResource("1_3uxll")]
+transform = Transform3D(0.999916, 0, -0.0129674, 0, 1, 0, 0.0129674, 0, 0.999916, 1, 1, 2)

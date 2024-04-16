@@ -1,0 +1,125 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl7325adhcyhy"]
+
+[ext_resource type="Script" path="res://Scenes/loadingScreen.gd" id="1_jd8ks"]
+[ext_resource type="Texture2D" uid="uid://cvvaum0axrget" path="res://Blender/Human_rig/two1bk11q1s21.png" id="1_k1sma"]
+
+[sub_resource type="Shader" id="Shader_m7csv"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float Amplitude : hint_range(0.0, 0.15) = 0.15;
+uniform float Period = 1.0;
+uniform float PhaseShift = 1.0;
+uniform float UpperLimit = 1.0;
+uniform float Current = 1.0;
+
+uniform sampler2D image : 
+	repeat_enable,
+	filter_linear_mipmap;
+
+uniform float tint_factor : hint_range(0.0, 1.0, 0.1) = 0.5;
+uniform float fade : hint_range(0.0, 1.0, 0.1) = 1.0;
+
+uniform vec4 mix_color : source_color;
+
+uniform vec2 tiling = vec2(1.0, 1.0);
+uniform vec2 offset;
+
+void vertex() {
+	UV = UV * tiling + offset * TIME;
+	//UV = UV;
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	// Add distortion
+	vec2 base_uv = UV;
+	
+	base_uv.x -= (((1.0 - base_uv.y) * Amplitude) * 
+		sin(Period * (base_uv.y - (TIME * 0.016 * PhaseShift)))) * 
+		clamp(1.0 - (base_uv.y * (10.0 - UpperLimit)), 0.0, 0.5) *
+		Current;
+	
+	//Add image and tint
+	vec4 main_texture = texture(image, base_uv);
+	vec4 final_output = main_texture;
+	
+	float original_modulation = 1.0 - tint_factor;
+	
+	final_output.rgb = mix(main_texture.rgb * original_modulation, mix_color.rgb * tint_factor, tint_factor);
+	final_output.a *= fade;
+	
+	//vec4 final_output_2 = texture(final_output, base_uv)
+	
+	COLOR = final_output.rgba;
+	//COLOR = main_texture;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5iu8x"]
+shader = SubResource("Shader_m7csv")
+shader_parameter/Amplitude = 0.149
+shader_parameter/Period = 2.0
+shader_parameter/PhaseShift = 6.0
+shader_parameter/UpperLimit = 100.0
+shader_parameter/Current = 1.0
+shader_parameter/tint_factor = 0.5
+shader_parameter/fade = 1.0
+shader_parameter/mix_color = Color(0, 0.752941, 0, 0.32549)
+shader_parameter/tiling = Vector2(8, 8)
+shader_parameter/offset = Vector2(0.03, 0.03)
+shader_parameter/image = ExtResource("1_k1sma")
+
+[node name="LoadingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jd8ks")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_5iu8x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -27.0
+offset_right = 76.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Currently Loading: "
+
+[node name="sceneName" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Control/VBoxContainer"]
+layout_mode = 2

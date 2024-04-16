@@ -1,0 +1,42 @@
+[gd_resource type="Sky" load_steps=8 format=3 uid="uid://cdb6tj6mu2su6"]
+
+[ext_resource type="Shader" path="res://clouds.gdshader" id="1_yjwqa"]
+[ext_resource type="Texture2D" uid="uid://cbtcdgylafjk6" path="res://Sky/weather.bmp" id="2_1iosp"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n7eqg"]
+noise_type = 3
+frequency = 0.0165
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_g8xm4"]
+noise = SubResource("FastNoiseLite_n7eqg")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gbk4n"]
+frequency = 0.006
+fractal_type = 3
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_c42g8"]
+noise = SubResource("FastNoiseLite_gbk4n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iflt3"]
+shader = ExtResource("1_yjwqa")
+shader_parameter/wind_direction = Vector2(1, 0)
+shader_parameter/wind_speed = 1.4
+shader_parameter/_density = 0.05
+shader_parameter/cloud_coverage = 0.416
+shader_parameter/_time_offset = 0.0
+shader_parameter/rayleigh = 2.0
+shader_parameter/rayleigh_color = Color(0.26, 0.41, 0.58, 1)
+shader_parameter/mie = 0.005
+shader_parameter/mie_eccentricity = 0.8
+shader_parameter/mie_color = Color(0.63, 0.77, 0.92, 1)
+shader_parameter/turbidity = 10.0
+shader_parameter/sun_disk_scale = 1.0
+shader_parameter/ground_color = Color(1, 1, 1, 1)
+shader_parameter/exposure = 0.1
+shader_parameter/worlnoise = SubResource("NoiseTexture3D_c42g8")
+shader_parameter/perlworlnoise = SubResource("NoiseTexture3D_g8xm4")
+shader_parameter/weathermap = ExtResource("2_1iosp")
+
+[resource]
+sky_material = SubResource("ShaderMaterial_iflt3")

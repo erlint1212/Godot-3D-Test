@@ -1,0 +1,172 @@
+[gd_scene load_steps=23 format=3 uid="uid://csmi7v0ooa0ou"]
+
+[ext_resource type="Script" path="res://Scenes/Working_Water.gd" id="1_xe4pc"]
+[ext_resource type="Shader" path="res://Scenes/Shaders/Sky.gdshader" id="2_f38ph"]
+[ext_resource type="Material" uid="uid://dfstbsu27a77d" path="res://Textures/Sand/sand_material_3d.tres" id="2_gdv2b"]
+[ext_resource type="Material" uid="uid://b842u0wtoqfvj" path="res://Scenes/Working_Water.tres" id="2_s5kf0"]
+[ext_resource type="Script" path="res://Scenes/Cube.gd" id="3_hkll5"]
+[ext_resource type="Texture2D" uid="uid://b4qoavfdlhnea" path="res://Textures/Sky/kloofendal_43d_clear_puresky_2k.exr" id="3_ro0cb"]
+[ext_resource type="AudioStream" uid="uid://3idks8k7efu2" path="res://Sounds/Water/calm_water.wav" id="4_ak63y"]
+[ext_resource type="Script" path="res://Scenes/Water2.gd" id="5_whydu"]
+[ext_resource type="PackedScene" uid="uid://b6xwomk76qhd2" path="res://Player/player.tscn" id="7_rtrt6"]
+[ext_resource type="PackedScene" uid="uid://dn3u23q8ay8wi" path="res://Target_dummy.tscn" id="8_pqiiv"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u13yn"]
+noise_type = 4
+seed = 1
+
+[sub_resource type="FogMaterial" id="FogMaterial_qqa2r"]
+albedo = Color(0.0235294, 0.133333, 0.345098, 1)
+height_falloff = 0.00749608
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hwerp"]
+shader = ExtResource("2_f38ph")
+shader_parameter/skyColor = Color(0.505882, 0.572549, 0.894118, 1)
+shader_parameter/horizonColor = Color(0, 0.0745098, 0.415686, 1)
+shader_parameter/skyTexture = ExtResource("3_ro0cb")
+
+[sub_resource type="Sky" id="Sky_ijjqu"]
+sky_material = SubResource("ShaderMaterial_hwerp")
+
+[sub_resource type="Environment" id="Environment_p5vlf"]
+background_mode = 2
+sky = SubResource("Sky_ijjqu")
+ambient_light_source = 3
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+fog_light_color = Color(0.231373, 0.254902, 0.341176, 1)
+fog_density = 0.0
+fog_sky_affect = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
+adjustment_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m0mvl"]
+material = ExtResource("2_gdv2b")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lrlbs"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6sq8v"]
+material = ExtResource("2_s5kf0")
+size = Vector2(400, 400)
+subdivide_width = 200
+subdivide_depth = 200
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bqrg0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ek8w6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6aatl"]
+size = Vector3(10, 1, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pgrfu"]
+size = Vector3(10, 1, 5)
+
+[node name="Ocean" type="Node3D"]
+script = ExtResource("1_xe4pc")
+noise = SubResource("FastNoiseLite_u13yn")
+plane_height = -20
+
+[node name="Water_Visibility" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -98, 0)
+size = Vector3(400, 200, 400)
+material = SubResource("FogMaterial_qqa2r")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p5vlf")
+
+[node name="DepthFogCheck" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+light_color = Color(0.996078, 1, 0.576471, 1)
+light_volumetric_fog_energy = 8.792
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 11.4673, -12)
+mesh = SubResource("PlaneMesh_m0mvl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_lrlbs")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.89028, 0)
+mesh = SubResource("PlaneMesh_6sq8v")
+script = ExtResource("5_whydu")
+
+[node name="OceanAmbient" type="AudioStreamPlayer3D" parent="Water"]
+stream = ExtResource("4_ak63y")
+unit_size = 400.0
+autoplay = true
+
+[node name="Cube" type="RigidBody3D" parent="."]
+script = ExtResource("3_hkll5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube"]
+shape = SubResource("BoxShape3D_bqrg0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cube"]
+mesh = SubResource("BoxMesh_ek8w6")
+
+[node name="Cuboid" type="RigidBody3D" parent="."]
+transform = Transform3D(-0.998344, -0.0575292, 0, 0.0575292, -0.998344, 0, 0, 0, 1, -9.12515, 11.3265, -7.529)
+mass = 10.0
+script = ExtResource("3_hkll5")
+float_force = 10.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cuboid"]
+shape = SubResource("BoxShape3D_6aatl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cuboid"]
+mesh = SubResource("BoxMesh_pgrfu")
+
+[node name="Player" parent="." instance=ExtResource("7_rtrt6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 13, -12)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.0479397, 0.319588, -0.946343, -0.0161689, 0.947557, 0.319178, 0.998719, -9.32517e-10, 0.050593, -12.6828, 4.14508, -0.93527)
+
+[node name="Box1" parent="." instance=ExtResource("8_pqiiv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, -15)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2930.89, 0)
+visible = false
+light_energy = 3000.0
+light_size = 1.635
+light_negative = true
+omni_range = 2930.09
+omni_attenuation = 0.00961833
+
+[node name="ProbeContainer" type="Node3D" parent="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2926.98, 0)
+
+[node name="FR" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.5, 2.5)
+
+[node name="FM" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.5, 0)
+
+[node name="FL" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.5, -2.5)
+
+[node name="BL" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -0.5, -2.5)
+
+[node name="BM" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -0.5, 0)
+
+[node name="BR" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -0.5, 2.5)
+
+[node name="MR" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 2.5)
+
+[node name="MM" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="ML" type="Marker3D" parent="OmniLight3D/ProbeContainer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -2.5)

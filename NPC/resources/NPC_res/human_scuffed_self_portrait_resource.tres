@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="NPC_core_stats_resource" load_steps=2 format=3 uid="uid://cu2iiu8qk1g4m"]
+
+[ext_resource type="Script" path="res://NPC/resources/NPC_core_stats_resource.gd" id="1_sh8hp"]
+
+[resource]
+script = ExtResource("1_sh8hp")
+Health = 10.0

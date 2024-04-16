@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://dubhr8yyykkg4"]
+
+[ext_resource type="Texture2D" uid="uid://l6j1ltc820o0" path="res://Textures/Floor/dirty_carpet_2k/textures/dirty_carpet_diff_2k.jpg" id="1_d5hip"]
+[ext_resource type="Texture2D" uid="uid://brsoe5gy8xf01" path="res://Textures/Floor/dirty_carpet_2k/textures/dirty_carpet_disp_2k.png" id="2_ha8su"]
+[ext_resource type="Texture2D" uid="uid://dlv03tn1m0psa" path="res://Textures/Floor/dirty_carpet_2k/textures/dirty_carpet_nor_gl_2k.png" id="3_qfcff"]
+[ext_resource type="Texture2D" uid="uid://dn77y5wolqt4b" path="res://Textures/Floor/dirty_carpet_2k/textures/dirty_carpet_rough_2k.png" id="4_1xyx6"]
+
+[resource]
+albedo_texture = ExtResource("1_d5hip")
+roughness_texture = ExtResource("4_1xyx6")
+normal_enabled = true
+normal_texture = ExtResource("3_qfcff")
+heightmap_enabled = true
+heightmap_texture = ExtResource("2_ha8su")
+uv1_scale = Vector3(2, 2, 2)

@@ -1,0 +1,19 @@
+[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://5q5o3by4haug"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gwcgc"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+heightmap_scale = 10.143
+refraction_scale = 1.0
+disable_receive_shadows = true
+grow = true
+grow_amount = 0.02
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ar536"]
+next_pass = SubResource("StandardMaterial3D_gwcgc")
+diffuse_mode = 3
+disable_receive_shadows = true
+
+[resource]
+material = SubResource("StandardMaterial3D_ar536")

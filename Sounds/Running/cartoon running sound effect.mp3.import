@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://lurdd1vh0tev"
+path="res://.godot/imported/cartoon running sound effect.mp3-fe2ac447b731bb1a2f448ce202463aa4.mp3str"
+
+[deps]
+
+source_file="res://Sounds/Running/cartoon running sound effect.mp3"
+dest_files=["res://.godot/imported/cartoon running sound effect.mp3-fe2ac447b731bb1a2f448ce202463aa4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

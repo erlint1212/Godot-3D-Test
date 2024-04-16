@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cugag35xr7vr6"]
+
+[ext_resource type="Shader" path="res://Player/breathing_bubbles.gdshader" id="1_1pt0i"]
+[ext_resource type="Texture2D" uid="uid://j06buhabayo0" path="res://Textures/Bubble/Bubble_color_shine.png" id="2_x110y"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kbt1f"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wyxfw"]
+noise = SubResource("FastNoiseLite_kbt1f")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_1pt0i")
+shader_parameter/smoothness = 0.05
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_wyxfw")
+shader_parameter/color = ExtResource("2_x110y")

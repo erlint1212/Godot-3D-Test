@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dmw1wj6pu7rrb"
+path="res://.godot/imported/Flashlight Sound Effect sfx.wav-0573e7fa1986b8c25fd9187df0013499.sample"
+
+[deps]
+
+source_file="res://Sounds/Props/Flashlight Sound Effect sfx.wav"
+dest_files=["res://.godot/imported/Flashlight Sound Effect sfx.wav-0573e7fa1986b8c25fd9187df0013499.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

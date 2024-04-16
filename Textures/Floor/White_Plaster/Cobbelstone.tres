@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://cxwh2n6rjq3hh"]
+
+[ext_resource type="Texture2D" uid="uid://c3wbqsx4x4sis" path="res://Textures/Floor/Cobblestone/patterned_cobblestone_diff_4k.png" id="1_wasi0"]
+[ext_resource type="Texture2D" uid="uid://c2813dgcxq47j" path="res://Textures/Floor/Cobblestone/patterned_cobblestone_nor_gl_4k.png" id="2_y46j3"]
+[ext_resource type="Texture2D" uid="uid://c285cwqg6ucp5" path="res://Textures/Floor/Cobblestone/patterned_cobblestone_rough_4k.png" id="3_ao7ln"]
+
+[resource]
+albedo_texture = ExtResource("1_wasi0")
+roughness_texture = ExtResource("3_ao7ln")
+normal_enabled = true
+normal_texture = ExtResource("2_y46j3")
+uv1_scale = Vector3(4, 4, 4)
+metadata/Cobblestone_floor = true

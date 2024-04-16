@@ -1,0 +1,48 @@
+[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://d4f15qo652e1y"]
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_tjgg5"]
+resource_name = "Phaser"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_v5nv3"]
+room_size = 8.40779e-45
+wet = 8.40779e-45
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_7wb68"]
+cutoff_hz = 20000.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_a5w4d"]
+room_size = 8.40779e-45
+wet = 8.40779e-45
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_p4gf2"]
+cutoff_hz = 20000.0
+
+[resource]
+bus/1/name = &"Water Dist"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectPhaser_tjgg5")
+bus/1/effect/0/enabled = true
+bus/2/name = &"SpatialBus#"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectReverb_v5nv3")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectLowPassFilter_7wb68")
+bus/2/effect/1/enabled = true
+bus/3/name = &"SpatialBus# 2"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"SpatialBus#"
+bus/3/effect/0/effect = SubResource("AudioEffectReverb_a5w4d")
+bus/3/effect/0/enabled = true
+bus/3/effect/1/effect = SubResource("AudioEffectLowPassFilter_p4gf2")
+bus/3/effect/1/enabled = true

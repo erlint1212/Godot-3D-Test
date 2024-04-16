@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://cje6jtiqn18qb"]
+
+[ext_resource type="Texture2D" uid="uid://cotcc3qq5pnpp" path="res://Textures/Floor/metal_plate_2k/metal_plate_diff_2k.png" id="1_yw78u"]
+[ext_resource type="Texture2D" uid="uid://d2bouc222r2vv" path="res://Textures/Floor/metal_plate_2k/metal_plate_disp_2k.png" id="2_4nmuo"]
+[ext_resource type="Texture2D" uid="uid://dly4j0dsqkxe" path="res://Textures/Floor/metal_plate_2k/metal_plate_metal_2k.png" id="3_aqo3g"]
+[ext_resource type="Texture2D" uid="uid://6lryhk46feek" path="res://Textures/Floor/metal_plate_2k/metal_plate_nor_gl_2k.png" id="4_re81n"]
+[ext_resource type="Texture2D" uid="uid://btgy4lwx4tm3v" path="res://Textures/Floor/metal_plate_2k/metal_plate_rough_2k.png" id="5_5infv"]
+
+[resource]
+albedo_texture = ExtResource("1_yw78u")
+metallic = 1.0
+metallic_texture = ExtResource("3_aqo3g")
+roughness_texture = ExtResource("5_5infv")
+normal_enabled = true
+normal_texture = ExtResource("4_re81n")
+heightmap_enabled = true
+heightmap_texture = ExtResource("2_4nmuo")
+uv1_scale = Vector3(2, 2, 2)

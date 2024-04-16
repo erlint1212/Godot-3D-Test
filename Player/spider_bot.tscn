@@ -1,0 +1,182 @@
+[gd_scene load_steps=11 format=3 uid="uid://ctbdjkwkk5njt"]
+
+[ext_resource type="PackedScene" uid="uid://cq3g7ofnkcpta" path="res://Props/spider_bot_model.gltf" id="1_elvec"]
+[ext_resource type="Script" path="res://Player/Robot/start_IK.gd" id="2_dlgs6"]
+[ext_resource type="Script" path="res://Player/Robot/spider_bot.gd" id="2_gtxyn"]
+[ext_resource type="Script" path="res://Player/Robot/IK_target.gd" id="4_2yn6u"]
+[ext_resource type="Script" path="res://Player/Robot/step_ray.gd" id="4_nddt6"]
+[ext_resource type="Script" path="res://Player/Robot/StepTargetContainer.gd" id="5_iktl8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmhxj"]
+albedo_color = Color(0.219608, 0.219608, 0.219608, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8sxlq"]
+albedo_color = Color(0.32549, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.666667, 0, 0, 1)
+emission_energy_multiplier = 16.0
+disable_receive_shadows = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0dyrk"]
+albedo_color = Color(0.219501, 0.219501, 0.219501, 1)
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_x0not"]
+
+[node name="spider_bot_model" instance=ExtResource("1_elvec")]
+script = ExtResource("2_gtxyn")
+ground_offset = 2.0
+
+[node name="Body_2" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(0.325856, 0, 0, 0, 0.325856, 0, 0, 0, 0.325856, 0, 0, 0)
+
+[node name="Body_2" parent="Armature/Skeleton3D/Body_2" index="0"]
+material_override = SubResource("StandardMaterial3D_lmhxj")
+
+[node name="Cylinder" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(0.325856, 0, 0, 0, 0, -0.325856, 0, 0.325856, 0, 0, 0.101015, -0.348666)
+
+[node name="Cylinder" parent="Armature/Skeleton3D/Cylinder" index="0"]
+material_override = SubResource("StandardMaterial3D_8sxlq")
+
+[node name="Leg" parent="Armature/Skeleton3D" index="2"]
+material_override = SubResource("StandardMaterial3D_0dyrk")
+
+[node name="frontLeftIK" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="3"]
+process_priority = 1
+root_bone = &"leg1FrontLeft"
+tip_bone = &"Foot IKFrontLeft"
+use_magnet = true
+magnet = Vector3(0, 10, 0)
+target_node = NodePath("../../FrontLeftTarget")
+script = ExtResource("2_dlgs6")
+
+[node name="frontRightIK" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="4"]
+process_priority = 1
+root_bone = &"leg1FrontRight"
+tip_bone = &"Foot IKFrontRight"
+use_magnet = true
+magnet = Vector3(0, 10, 0)
+target_node = NodePath("../../FrontRightTarget")
+script = ExtResource("2_dlgs6")
+
+[node name="backLeftIK" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="5"]
+process_priority = 1
+root_bone = &"leg1BackLeft"
+tip_bone = &"Foot IKBackLeft"
+use_magnet = true
+magnet = Vector3(0, 10, 0)
+target_node = NodePath("../../BackLeftTarget")
+script = ExtResource("2_dlgs6")
+
+[node name="backRightIK" type="SkeletonIK3D" parent="Armature/Skeleton3D" index="6"]
+process_priority = 1
+root_bone = &"leg1BackRight"
+tip_bone = &"Foot IKBackRight"
+use_magnet = true
+magnet = Vector3(0, 10, 0)
+target_node = NodePath("../../BackRightTarget")
+script = ExtResource("2_dlgs6")
+
+[node name="FrontLeftTarget" type="Marker3D" parent="Armature" index="1" node_paths=PackedStringArray("step_target", "soundStream", "adjecent_target", "opposite_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, -2, -2.4)
+top_level = true
+script = ExtResource("4_2yn6u")
+step_target = NodePath("../../StepTargetContainer/RayCast3D/FrontLeftStepTarget")
+soundStream = NodePath("../../StepTargetContainer/RayCast3D/FrontLeftStepTarget/FrontLeftAudio")
+adjecent_target = NodePath("../FrontRightTarget")
+opposite_target = NodePath("../BackRightTarget")
+
+[node name="FrontRightTarget" type="Marker3D" parent="Armature" index="2" node_paths=PackedStringArray("step_target", "soundStream", "adjecent_target", "opposite_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, -2, -2.4)
+top_level = true
+script = ExtResource("4_2yn6u")
+step_target = NodePath("../../StepTargetContainer/RayCast3D2/FrontRightStepTarget")
+soundStream = NodePath("../../StepTargetContainer/RayCast3D2/FrontRightStepTarget/FrontRightAudio")
+adjecent_target = NodePath("../FrontLeftTarget")
+opposite_target = NodePath("../BackLeftTarget")
+
+[node name="BackLeftTarget" type="Marker3D" parent="Armature" index="3" node_paths=PackedStringArray("step_target", "soundStream", "adjecent_target", "opposite_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, -2, 2.4)
+top_level = true
+script = ExtResource("4_2yn6u")
+step_target = NodePath("../../StepTargetContainer/RayCast3D3/BackLeftStepTarget")
+soundStream = NodePath("../../StepTargetContainer/RayCast3D3/BackLeftStepTarget/BackLeftAudio")
+adjecent_target = NodePath("../BackRightTarget")
+opposite_target = NodePath("../FrontRightTarget")
+
+[node name="BackRightTarget" type="Marker3D" parent="Armature" index="4" node_paths=PackedStringArray("step_target", "soundStream", "adjecent_target", "opposite_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, -2, 2.4)
+top_level = true
+script = ExtResource("4_2yn6u")
+step_target = NodePath("../../StepTargetContainer/RayCast3D4/BackRightStepTarget")
+soundStream = NodePath("../../StepTargetContainer/RayCast3D4/BackRightStepTarget/BackRightAudio")
+adjecent_target = NodePath("../BackLeftTarget")
+opposite_target = NodePath("../FrontLeftTarget")
+
+[node name="SpringArmPivot" type="Node3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 3.22455, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+spring_length = 9.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D" index="0"]
+
+[node name="StepTargetContainer" type="Node3D" parent="." index="2"]
+script = ExtResource("5_iktl8")
+
+[node name="RayCast3D" type="RayCast3D" parent="StepTargetContainer" index="0" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(0.997801, 0.0662739, 0, -0.0661282, 0.995608, -0.0662739, -0.00439223, 0.0661282, 0.997801, -1.9, 5.5, -1.9)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("4_nddt6")
+step_target = NodePath("FrontLeftStepTarget")
+
+[node name="FrontLeftStepTarget" type="Marker3D" parent="StepTargetContainer/RayCast3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, -2, -2.4)
+top_level = true
+
+[node name="FrontLeftAudio" type="AudioStreamPlayer3D" parent="StepTargetContainer/RayCast3D/FrontLeftStepTarget" index="0"]
+stream = SubResource("AudioStreamWAV_x0not")
+volume_db = -4.103
+
+[node name="RayCast3D2" type="RayCast3D" parent="StepTargetContainer" index="1" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(0.997801, -0.0662739, 0, 0.0661282, 0.995608, -0.0662739, 0.00439223, 0.0661282, 0.997801, 1.9, 5.5, -1.9)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("4_nddt6")
+step_target = NodePath("FrontRightStepTarget")
+
+[node name="FrontRightStepTarget" type="Marker3D" parent="StepTargetContainer/RayCast3D2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, -2, -2.4)
+top_level = true
+
+[node name="FrontRightAudio" type="AudioStreamPlayer3D" parent="StepTargetContainer/RayCast3D2/FrontRightStepTarget" index="0"]
+stream = SubResource("AudioStreamWAV_x0not")
+volume_db = -4.103
+
+[node name="RayCast3D3" type="RayCast3D" parent="StepTargetContainer" index="2" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(0.997801, 0.0662739, 0, -0.0661282, 0.995608, 0.0662739, 0.00439223, -0.0661282, 0.997801, -1.9, 5.5, 1.9)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("4_nddt6")
+step_target = NodePath("BackLeftStepTarget")
+
+[node name="BackLeftStepTarget" type="Marker3D" parent="StepTargetContainer/RayCast3D3" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, -2, 2.4)
+top_level = true
+
+[node name="BackLeftAudio" type="AudioStreamPlayer3D" parent="StepTargetContainer/RayCast3D3/BackLeftStepTarget" index="0"]
+stream = SubResource("AudioStreamWAV_x0not")
+volume_db = -4.103
+
+[node name="RayCast3D4" type="RayCast3D" parent="StepTargetContainer" index="3" node_paths=PackedStringArray("step_target")]
+transform = Transform3D(0.997801, -0.0662739, 0, 0.0661282, 0.995608, 0.0662739, -0.00439223, -0.0661282, 0.997801, 1.9, 5.5, 1.9)
+target_position = Vector3(0, -10, 0)
+script = ExtResource("4_nddt6")
+step_target = NodePath("BackRightStepTarget")
+
+[node name="BackRightStepTarget" type="Marker3D" parent="StepTargetContainer/RayCast3D4" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, -2, 2.4)
+top_level = true
+
+[node name="BackRightAudio" type="AudioStreamPlayer3D" parent="StepTargetContainer/RayCast3D4/BackRightStepTarget" index="0"]
+stream = SubResource("AudioStreamWAV_x0not")
+volume_db = -4.103

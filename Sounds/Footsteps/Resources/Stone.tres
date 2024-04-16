@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Movement_sfx_resource" load_steps=4 format=3 uid="uid://cinqcqa8t2nfw"]
+
+[ext_resource type="AudioStream" uid="uid://dd5n18dpqogd6" path="res://Sounds/Walking/RunningOnStone.wav" id="1_5mun0"]
+[ext_resource type="Script" path="res://Sounds/Footsteps/footstep_sound_resource.gd" id="1_v63w6"]
+[ext_resource type="AudioStream" uid="uid://gsnyplbupf43" path="res://Sounds/Walking/WalkingOnStone.wav" id="3_et88w"]
+
+[resource]
+script = ExtResource("1_v63w6")
+walking_sound = ExtResource("3_et88w")
+running_sound = ExtResource("1_5mun0")

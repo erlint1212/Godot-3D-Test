@@ -1,0 +1,440 @@
+[gd_scene load_steps=30 format=3 uid="uid://ch8kpy6fe6gt7"]
+
+[ext_resource type="Script" path="res://NPC/Scripts/EnemyBugTest.gd" id="1_nn5kx"]
+[ext_resource type="Script" path="res://NPC/Scripts/BodyPartHit.gd" id="2_d4wrs"]
+[ext_resource type="Script" path="res://Player/GroundChecker.gd" id="2_sjy8j"]
+[ext_resource type="PackedScene" uid="uid://b1ymytc16dpte" path="res://Sounds/spatial_audio_player_3d.tscn" id="3_15o3f"]
+[ext_resource type="Script" path="res://NPC/HurtBox.gd" id="5_77ne2"]
+[ext_resource type="Resource" uid="uid://et0lbunbthxo" path="res://Weapons/Weapons_Resources/Sword_resource.tres" id="6_joeag"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xp48n"]
+
+[sub_resource type="Animation" id="Animation_w2c3c"]
+resource_name = "Attack"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Weapon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.491757, 0.797954, 0.635232), Vector3(-0.554414, 0.428184, 0.67976), Vector3(-0.491757, 0.797954, 0.635232)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Weapon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.161007), Vector3(1.28759, 1.53032, 1.42845), Vector3(0, 0, 0.161007)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Model:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.2), Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Model:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.174533, 0.314159, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Model/Weapon/Blade/HurtBox/AxeHeadHurtBox:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, false, true, true]
+}
+
+[sub_resource type="Animation" id="Animation_6bxcq"]
+resource_name = "Idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model/Weapon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.491757, 0.797954, 0.635232), Vector3(-0.491757, 0.899194, 0.635232), Vector3(-0.491757, 0.797954, 0.635232)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model/Head/Head:mesh:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.5, 0.51, 0.5]
+}
+
+[sub_resource type="Animation" id="Animation_37bq0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Model/Weapon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.491757, 0.797954, 0.635232)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("Model/Weapon:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.161007)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/path = NodePath("Model/Head/Head:mesh:radius")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Model:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Model:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CollisionShape3D:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Model/Weapon/Blade/HurtBox/AxeHeadHurtBox:disabled")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_4g241"]
+resource_name = "Spawn"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -0.75, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_tvxq1"]
+resource_name = "Walking"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.1, 0.2, 0), Vector3(0, 0, 0), Vector3(0.1, 0.2, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.1, 0.2, 0), Vector3(0, 0, 0), Vector3(0.1, 0.2, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e8uof"]
+_data = {
+"Attack": SubResource("Animation_w2c3c"),
+"Idle": SubResource("Animation_6bxcq"),
+"RESET": SubResource("Animation_37bq0"),
+"Spawn": SubResource("Animation_4g241"),
+"Walking": SubResource("Animation_tvxq1")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_btmhg"]
+albedo_color = Color(0, 1, 0, 1)
+emission_enabled = true
+emission = Color(0, 1, 0, 1)
+emission_energy_multiplier = 5.75
+
+[sub_resource type="SphereMesh" id="SphereMesh_adsnj"]
+material = SubResource("StandardMaterial3D_btmhg")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ccv84"]
+albedo_color = Color(0.286275, 0.286275, 0.286275, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hes88"]
+material = SubResource("StandardMaterial3D_ccv84")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lp0u5"]
+albedo_color = Color(0.286275, 0.286275, 0.286275, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_awwke"]
+material = SubResource("StandardMaterial3D_lp0u5")
+size = Vector3(0.2, 0.3, 0.05)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_peu74"]
+radius = 0.53
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpw2b"]
+albedo_color = Color(1, 0, 0, 1)
+emission_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lw36e"]
+material = SubResource("StandardMaterial3D_vpw2b")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hmyy3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2j7od"]
+radius = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ucsmv"]
+albedo_color = Color(0.431373, 0.215686, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f7yke"]
+material = SubResource("StandardMaterial3D_ucsmv")
+top_radius = 0.05
+bottom_radius = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kbyus"]
+albedo_color = Color(0.556863, 0.556863, 0.556863, 1)
+metallic = 0.52
+
+[sub_resource type="BoxMesh" id="BoxMesh_gcvti"]
+material = SubResource("StandardMaterial3D_kbyus")
+size = Vector3(0.01, 0.25, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rqpss"]
+size = Vector3(0.01, 0.25, 0.5)
+
+[node name="TestEnemy" type="CharacterBody3D" groups=["Target"]]
+script = ExtResource("1_nn5kx")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_xp48n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_e8uof")
+}
+
+[node name="GroundChecker" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.766476, 0)
+target_position = Vector3(0, -5, 0)
+script = ExtResource("2_sjy8j")
+
+[node name="SpatialAudioPlayer3D" parent="." instance=ExtResource("3_15o3f")]
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Head" type="Node3D" parent="Model" groups=["Target"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.504719, 0)
+
+[node name="RayVision" type="RayCast3D" parent="Model/Head"]
+target_position = Vector3(0, 0, -10)
+collision_mask = 7
+
+[node name="RightEye" type="MeshInstance3D" parent="Model/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.193, 0.105281, 0.42)
+mesh = SubResource("SphereMesh_adsnj")
+skeleton = NodePath("../../..")
+
+[node name="LeftEye" type="MeshInstance3D" parent="Model/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.193103, 0.104862, 0.419889)
+mesh = SubResource("SphereMesh_adsnj")
+skeleton = NodePath("../../..")
+
+[node name="Head" type="MeshInstance3D" parent="Model/Head"]
+mesh = SubResource("SphereMesh_hes88")
+skeleton = NodePath("../../..")
+
+[node name="Nose" type="MeshInstance3D" parent="Model/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047356, 0.478587)
+mesh = SubResource("BoxMesh_awwke")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model/Head" node_paths=PackedStringArray("command_node")]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("2_d4wrs")
+damage_multiplier = 2.0
+command_node = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Head/StaticBody3D"]
+shape = SubResource("SphereShape3D_peu74")
+
+[node name="Body" type="MeshInstance3D" parent="Model"]
+mesh = SubResource("CapsuleMesh_lw36e")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Model/Body" node_paths=PackedStringArray("command_node")]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("2_d4wrs")
+command_node = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Body/StaticBody3D"]
+shape = SubResource("CapsuleShape3D_hmyy3")
+
+[node name="Weapon" type="Node3D" parent="Model"]
+transform = Transform3D(0.987067, -0.160312, 0, 0.160312, 0.987066, 0, 0, 0, 1, -0.491757, 0.797954, 0.635232)
+
+[node name="WeaponSounds" parent="Model/Weapon" instance=ExtResource("3_15o3f")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Weapon"]
+shape = SubResource("CylinderShape3D_2j7od")
+disabled = true
+
+[node name="Handle" type="MeshInstance3D" parent="Model/Weapon"]
+mesh = SubResource("CylinderMesh_f7yke")
+skeleton = NodePath("../../..")
+
+[node name="Blade" type="MeshInstance3D" parent="Model/Weapon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012635, 0.858374, 0.228848)
+mesh = SubResource("BoxMesh_gcvti")
+
+[node name="HurtBox" type="Area3D" parent="Model/Weapon/Blade" node_paths=PackedStringArray("parent")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("5_77ne2")
+weapon_resource = ExtResource("6_joeag")
+Audio_Stream_Path = NodePath("../../WeaponSounds")
+parent = NodePath("../../../..")
+
+[node name="AxeHeadHurtBox" type="CollisionShape3D" parent="Model/Weapon/Blade/HurtBox"]
+shape = SubResource("BoxShape3D_rqpss")
+
+[connection signal="attack_animation_finished" from="." to="Model/Weapon/Blade/HurtBox" method="_on_test_enemy_attack_animation_finished"]
+[connection signal="surface_changed" from="GroundChecker" to="." method="_on_ground_checker_surface_changed"]
+[connection signal="body_entered" from="Model/Weapon/Blade/HurtBox" to="Model/Weapon/Blade/HurtBox" method="_on_body_entered"]
